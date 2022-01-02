@@ -44,6 +44,18 @@ class Game:
         for terr in self.territory_list:
             terr.get_adjacent_territories()
 
+        for current_kingdom in self.kingdom_list:
+            # Update UI:
+            # Outline the kingdom who's turn it is
+            # Outline the territories they could attack
+            # Conduct Player Actions
+            # Calculate troop income and have player assign reinforcements for their kingdom
+            # Calculate the number of attacks they are allowed and for each allowed attack,
+            # have the player select a single territory from within their attackable territories
+            # carry out combat...update the troop totals in both territories and update color as necessary
+            print(current_kingdom.text_color)
+
+
     def draw(self):
         self.world.draw()
         for kingdom in self.kingdom_list:
