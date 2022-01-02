@@ -1,12 +1,12 @@
 import pygame
 from config import *
+from territory import Territory
 
 
 class World:
     def __init__(self, game, data):
         self.game = game
         self.data = data
-        self.tileList = []
 
     def update(self):
         row_cnt = 0
@@ -15,30 +15,28 @@ class World:
             for tile in row:
                 img = pygame.Surface((TILE_SIZE, TILE_SIZE))
                 img_rect = img.get_rect()
+                img_rect.x = (col_cnt * TILE_SIZE) + TILE_SIZE
+                img_rect.y = (row_cnt * TILE_SIZE) + TILE_SIZE
                 if tile == 1:
                     img.fill(BLUE)
-                    img_rect.x = (col_cnt * TILE_SIZE) + TILE_SIZE
-                    img_rect.y = (row_cnt * TILE_SIZE) + TILE_SIZE
                     tile = (img, img_rect)
-                    self.tileList.append(tile)
+                    self.game.tile_list.append(tile)
+                    self.game.territory_list.append(Territory(self.game, col_cnt, row_cnt, BLUE))
                 if tile == 2:
                     img.fill(GREEN)
-                    img_rect.x = (col_cnt * TILE_SIZE) + TILE_SIZE
-                    img_rect.y = (row_cnt * TILE_SIZE) + TILE_SIZE
                     tile = (img, img_rect)
-                    self.tileList.append(tile)
+                    self.game.tile_list.append(tile)
+                    self.game.territory_list.append(Territory(self.game, col_cnt, row_cnt, GREEN))
                 if tile == 3:
                     img.fill(RED)
-                    img_rect.x = (col_cnt * TILE_SIZE) + TILE_SIZE
-                    img_rect.y = (row_cnt * TILE_SIZE) + TILE_SIZE
                     tile = (img, img_rect)
-                    self.tileList.append(tile)
+                    self.game.tile_list.append(tile)
+                    self.game.territory_list.append(Territory(self.game, col_cnt, row_cnt, RED))
                 if tile == 0:
                     img.fill(BACKGROUND_COLOR)
-                    img_rect.x = (col_cnt * TILE_SIZE) + TILE_SIZE
-                    img_rect.y = (row_cnt * TILE_SIZE) + TILE_SIZE
                     tile = (img, img_rect)
-                    self.tileList.append(tile)
+                    self.game.tile_list.append(tile)
+                    self.game.territory_list.append(Territory(self.game, col_cnt, row_cnt, BACKGROUND_COLOR))
                 col_cnt += 1
             row_cnt += 1
 
@@ -56,6 +54,6 @@ class World:
                              (SCREEN_WIDTH - TILE_SIZE, (TILE_SIZE * x) + TILE_SIZE))
 
     def draw(self):
-        for tile in self.tileList:
+        for tile in self.game.tile_list:
             self.game.screen.blit(tile[0], tile[1])
         self.draw_grid()
